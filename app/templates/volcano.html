@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/volcano" style="width: max-content" method="POST" >
+    {{ form.hidden_tag() }}
+    <fieldset>
+        <legend>Add volcano</legend>
+        <p>
+        {{form.namev.label}}<br>
+        {{form.namev(size=25)}}<br>
+        </p>
+        <p>
+        {{form.latitude.label}}<br>
+        {{form.latitude(size=6)}}<br>
+        </p>
+        <p>
+        {{form.longitude.label}}<br>
+        {{form.longitude(size=6)}}<br>
+        </p>
+        <p>
+        {{form.height.label}}<br>
+        {{form.height(size=6)}}<br>
+        </p>
+        <p>{{ form.sub_add() }}</p>
+
+    </fieldset>
+</form>
+<h3>Вулканы</h3>
+<table>
+    <tr><th>Название</th>
+        <th>Широта</th>
+        <th>Долгота</th>
+        <th>Высота (в метрах)</th>
+    </tr> <!--ряд с ячейками заголовков-->
+    {% for volcano in volcanoes%}
+    <tr><td>{{volcano.namev}}</td>
+        <td>{{volcano.latitude}}</td>
+        <td>{{volcano.longitude}}</td>
+        <td>{{volcano.height}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Вулканология</title>
+</head>
+<body>
+<div>
+    Вулканология:
+    <a href="{{ url_for('index') }}">Домашняя</a>
+    <a href="{{ url_for('volcano') }}">Вулканы</a>
+    <a href="{{ url_for('state_volcanoes') }}">Состояния вулканов</a>
+
+</div>
+{% block content %}{% endblock %}
+</body>
+</html>
