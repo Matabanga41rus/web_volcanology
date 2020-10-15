@@ -55,12 +55,6 @@ def state_volcanoes():
     return render_template('state_volcanoes.html', form=form, state_volcanoes=stvs)
 
 
-@app.route('/st')
-def st():
-    stvs = State_volcano.query.all()
-    return render_template('st.html', state_volcanoes=stvs)
-
-
 @app.route('/state_volcano/<namev>', methods=['GET', 'POST'])
 def state_volcano(namev):
     stvs = State_volcano.query.filter_by(namev=namev)
