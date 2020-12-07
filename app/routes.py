@@ -24,8 +24,7 @@ def volcano():
                     form.latitude.data,
                     form.longitude.data,
                     form.height.data)
-        db.session.add(v)
-        db.session.commit()
+
         return redirect(url_for('volcano'))
     return render_template('volcano.html', form=form, volcanoes=volcanoes)
 
@@ -33,26 +32,28 @@ def volcano():
 @app.route('/state_volcanoes', methods=['GET', 'POST'])
 def state_volcanoes():
     stvs = State_volcano.query.all()
-    volcanoes = Volcano.query.all()
+    error = ""
 
     form = StateVolcanoForm()
     if form.validate_on_submit():
-        print('oy yea')
-        for volcano in volcanoes:
-            if (volcano.namev == form.namev.data):
-                st = State_volcano(form.namev.data,
-                                   form.date_state.data,
-                                   form.thermal_anomaly.data,
-                                   form.number_events.data,
-                                   form.max_pgd_height.data,
-                                   form.observ_ash_emissions.data,
-                                   form.hazard_code.data)
-                db.session.add(st)
-                db.session.commit()
-                return redirect(url_for('state_volcanoes'))
-                break
+        st = State_volcano(form.namev.data,
+                            form.date_state.data,
+                            form.thermal_anomaly.data,
+                            form.number_events.data,
+                            form.max_pgd_height.data,
+                            form.observ_ash_emissions.data,
+                            form.hazard_code.data)
+        try:
+            db.session.add(st)
+            db.session.commit()
+        except:
+            print('ERROR')
+            error = "ERROR"
 
-    return render_template('state_volcanoes.html', form=form, state_volcanoes=stvs)
+        return redirect(url_for('state_volcanoes'))
+
+
+    return render_template('state_volcanoes.html', form=form, state_volcanoes=stvs, error=error)
 
 
 @app.route('/state_volcano/<namev>', methods=['GET', 'POST'])
